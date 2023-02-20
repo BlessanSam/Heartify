@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(const MyApp());
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -13,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.cyan,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -26,23 +25,57 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('AI HEALTH'),
+        title: Text('AI HEALTH',),
+        centerTitle: true,
       ),
       body: SafeArea(
         child: Container(
-          child:Center(
+          child: Center(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(height: 50,),
-                ElevatedButton(
-                  onPressed: (){},
-                  child: Text('Heart Rate'),
+                Padding(
+                  padding: const EdgeInsets.all(32.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red,
+                            minimumSize: Size(200,100),
+                          ),
+                          onPressed: (){},
+                          child: Text('Heart Rate',style: TextStyle(fontSize:25)),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                SizedBox(height: 5,),
-                ElevatedButton(
-                  onPressed: (){},
-                  child: Text('Diagnose'),
+                Padding(
+                  padding: const EdgeInsets.all(32.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red,
+                            minimumSize: Size(200,100),
+                          ),
+                          onPressed: (){},
+                          child: Text(
+                              'Diagnose',
+                              style: TextStyle(
+                                  fontFamily: 'C:\Users\BLESSAN\apps\healthmonitoring\assets\fonts\Pacifico-Regular.ttf',
+                                  fontSize:25,
+                              )
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 )
               ],
             ),
