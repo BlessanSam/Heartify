@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:healthmonitoring/heartBeat.dart';
 
 void main() => runApp(const MyApp());
 
@@ -47,7 +48,9 @@ class MyHomePage extends StatelessWidget {
                             backgroundColor: Colors.red,
                             minimumSize: Size(200,100),
                           ),
-                          onPressed: (){},
+                          onPressed: (){
+                            Navigator.push(context,MaterialPageRoute(builder: (context) => ViewHeartBeat()));
+                          },
                           child: Text('Heart Rate',style: TextStyle(fontSize:25)),
                         ),
                       ),
