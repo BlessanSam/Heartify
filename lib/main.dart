@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:healthmonitoring/heartBeat.dart';
+import 'package:healthmonitoring/pages/diagnosis.dart';
 
 void main() => runApp(const MyApp());
 
@@ -11,11 +12,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Health Monitoring Beta',
       theme: ThemeData(
-        primarySwatch: Colors.cyan,
+        primarySwatch: Colors.teal,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Health Monitor Home Page'),
     );
   }
 }
@@ -26,9 +27,9 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.tealAccent,
       appBar: AppBar(
-        title: Text('AI HEALTH',),
+        title: const Text('AI HEALTH',),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -45,13 +46,15 @@ class MyHomePage extends StatelessWidget {
                       Expanded(
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.red,
-                            minimumSize: Size(200,100),
+                            backgroundColor: Colors.white,
+                            minimumSize: const Size(200,100),
                           ),
                           onPressed: (){
-                            Navigator.push(context,MaterialPageRoute(builder: (context) => ViewHeartBeat()));
+                            Navigator.push(context,MaterialPageRoute(builder: (context) => const ViewHeartBeat()));
                           },
-                          child: Text('Heart Rate',style: TextStyle(fontSize:25)),
+                          child: const Text('Heart Rate',style: TextStyle(
+                              fontFamily: 'Pacifico', fontSize:25, color: Colors.black,
+                          )),
                         ),
                       ),
                     ],
@@ -64,15 +67,18 @@ class MyHomePage extends StatelessWidget {
                       Expanded(
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.red,
-                            minimumSize: Size(200,100),
+                            backgroundColor: Colors.white,
+                            minimumSize: const Size(200,100),
                           ),
-                          onPressed: (){},
-                          child: Text(
+                          onPressed: (){
+                            Navigator.push(context,MaterialPageRoute(builder: (context) => const Question1()));
+                          },
+                          child: const Text(
                               'Diagnose',
                               style: TextStyle(
-                                  fontFamily: 'C:\Users\BLESSAN\apps\healthmonitoring\assets\fonts\Pacifico-Regular.ttf',
-                                  fontSize:25,
+                                fontFamily: 'Pacifico',
+                                fontSize:25,
+                                color: Colors.black,
                               )
                           ),
                         ),
