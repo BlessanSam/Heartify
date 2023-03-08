@@ -71,7 +71,7 @@ class MyHomePage extends StatelessWidget {
                             minimumSize: const Size(200,100),
                           ),
                           onPressed: (){
-                            Navigator.push(context,MaterialPageRoute(builder: (context) => const Question1()));
+                            Navigator.push(context,MaterialPageRoute(builder: (context) => const ChestPain()));
                           },
                           child: const Text(
                               'Diagnose',
