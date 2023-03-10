@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:healthmonitoring/main.dart';
+//import 'package:healthmonitoring/main.dart';
 List<String> Symptoms = [];
+
 class ChestPain extends StatelessWidget {
   const ChestPain({Key? key}) : super(key: key);
   //Question for chest pain
@@ -1283,13 +1284,14 @@ List<String> Atrial = ["Chest Pain","Shortness of Breath","Dizziness","Fatigue",
 List<String> HighBP = ["Chest Pain","Shortness of Breath","Dizziness","Nose Bleed","Headache","Blurred Vision"];
 List<String> LowBP = ["Chest Pain","Shortness of Breath","Dizziness","Nose Bleed","Headache","Blurred Vision","Weakness","Nausea","Vomitting","Sleeplessness"];
 int count = 0;
-String diagnosis = "";
+String diagnosis = "No previous diagnosis";
 
 
 class Result extends StatelessWidget {
   const Result({Key? key}) : super(key: key);
 
   void checker() {
+    diagnosis = "Please refer to a doctor.";
     for (var value in Angina) {
       if (Symptoms.contains(value)) {
         count++;
@@ -1380,7 +1382,7 @@ class Result extends StatelessWidget {
                 Padding(
                     padding: const EdgeInsets.all(32.0),
                     child:
-                        Text("This is your diagnosis - $diagnosis",style: TextStyle(fontSize: 25, color: Colors.black))
+                        Text("The result of your diagnosis:\n$diagnosis",style: TextStyle(fontSize: 25, color: Colors.black))
                 ),
                 Padding(
                   padding: const EdgeInsets.all(32.0),
@@ -1393,7 +1395,7 @@ class Result extends StatelessWidget {
                             minimumSize: const Size(200,100),
                           ),
                           onPressed: (){
-                            Navigator.push(context,MaterialPageRoute(builder: (context) => MyHomePage(title: 'Health Monitor Home Page')));
+                            Navigator.of(context).popUntil((route) => route.isFirst);
                           },
                           child: const Text('Return to HomePage',style: TextStyle(
                             fontSize:25, color: Colors.black,
@@ -1410,3 +1412,118 @@ class Result extends StatelessWidget {
     );
   }
 }
+
+class Previous extends StatelessWidget {
+  const Previous({Key? key}) : super(key: key);
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Previous Diagnosis"),
+        backgroundColor: Colors.teal,
+      ),
+      body: Container(
+        child: Center(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8,50,0,8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Your previous diagnosis was:",style: TextStyle(fontSize: 20, color: Colors.black)),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0,35,0,0),
+                          child: Text("$diagnosis",style: TextStyle(fontSize: 20, color: Colors.black)),
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(5, 40, 0, 0),
+                      child: ElevatedButton(
+                          onPressed: () {},
+                          child: Text("More info",style: TextStyle(fontSize: 15, color: Colors.white,)),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(25,300,25,32),
+                child: Row(
+                  children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        minimumSize: const Size(100,100),
+                      ),
+                      onPressed: (){
+                        showDialog<String>(
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
+                            title: const Text('Have you been cured?'),
+                            // content: const Text('Congrats on being cured!'),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  diagnosis = "No previous diagnosis";
+                                  showDialog<String>(
+                                    context: context,
+                                    builder: (BuildContext context) => AlertDialog(
+                                      title: const Text('Congratulations on being cured!'),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
+                                          child: const Text('OK'),
+                                        )
+                                      ],
+                                    ),
+                                  );
+                                },
+                                child: const Text('Yes'),
+                              ),
+                              TextButton(
+                                onPressed: () => Navigator.pop(context, 'OK'),
+                                child: const Text('No'),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                      child: const Text('Have you\nbeen cured?',style: TextStyle(
+                        fontSize:20, color: Colors.black,
+                      )),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(30,8,0,8),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          minimumSize: const Size(100,100),
+                        ),
+                        onPressed: (){
+                          Navigator.push(context,MaterialPageRoute(builder: (context) => ChestPain()));
+                        },
+                        child: const Text('Rediagnose',style: TextStyle(
+                          fontSize:25, color: Colors.black,
+                        )),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
