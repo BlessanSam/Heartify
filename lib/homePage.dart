@@ -55,7 +55,12 @@ class MyHomePage extends StatelessWidget {
                               minimumSize: const Size(200,100),
                             ),
                             onPressed: (){
-                              Navigator.push(context,MaterialPageRoute(builder: (context) => ChestPain(account: account,)));
+                              if (diagnosis == "No previous diagnosis") {
+                                Navigator.push(context,MaterialPageRoute(builder: (context) => ChestPain(account: account)));
+                              } else {
+                                Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) => Previous(account: account)));
+                              }
                             },
                             child: const Text(
                                 'Diagnose',
