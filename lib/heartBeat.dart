@@ -20,7 +20,7 @@ class _ViewHeartBeatState extends State<ViewHeartBeat> {
       ),
       body: Container(
         decoration: BoxDecoration(
-          image: DecorationImage(image: NetworkImage('https://mir-s3-cdn-cf.behance.net/project_modules/disp/89ba7387618661.5dbdbcfade1a8.gif'),opacity: 150),
+          image: DecorationImage(image: AssetImage('HeartBeat.gif'),opacity: 150),
         ),
          child: Center(
            child:Column(

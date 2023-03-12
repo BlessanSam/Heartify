@@ -1303,6 +1303,7 @@ List<String> Atrial = ["Chest Pain","Shortness of Breath","Dizziness","Fatigue",
 List<String> HighBP = ["Chest Pain","Shortness of Breath","Dizziness","Nose Bleed","Headache","Blurred Vision"];
 List<String> LowBP = ["Chest Pain","Shortness of Breath","Dizziness","Nose Bleed","Headache","Blurred Vision","Weakness","Nausea","Vomitting","Sleeplessness"];
 int count = 0;
+int count1 = 0;
 String diagnosis = "No previous diagnosis";
 
 
@@ -1323,6 +1324,7 @@ class Result extends StatelessWidget {
       count = 0;
     } else {
       count = 0;
+      count1++;
     }
     for (var value in Heart_Attack) {
       if (Symptoms.contains(value)) {
@@ -1335,6 +1337,7 @@ class Result extends StatelessWidget {
       count = 0;
     } else {
       count = 0;
+      count1++;
     }
     for (var value in Arrhythmia) {
       if (Symptoms.contains(value)) {
@@ -1347,6 +1350,7 @@ class Result extends StatelessWidget {
       count = 0;
     } else {
       count = 0;
+      count1++;
     }
     for (var value in Atrial) {
       if (Symptoms.contains(value)) {
@@ -1359,6 +1363,7 @@ class Result extends StatelessWidget {
       count = 0;
     } else {
       count = 0;
+      count1++;
     }
     for (var value in HighBP) {
       if (Symptoms.contains(value)) {
@@ -1371,6 +1376,7 @@ class Result extends StatelessWidget {
       count = 0;
     } else {
       count = 0;
+      count1++;
     }
     for (var value in LowBP) {
       if (Symptoms.contains(value)) {
@@ -1383,6 +1389,14 @@ class Result extends StatelessWidget {
       count = 0;
     } else {
       count = 0;
+      count1++;
+    }
+    if (count1 == 6) {
+      diagnosis = "Please refer to a doctor";
+      Symptoms.clear();
+      count1 == 0;
+    } else {
+      count1 == 0;
     }
   }
   final database = FirebaseDatabase.instance.ref('Account');
@@ -1404,7 +1418,7 @@ class Result extends StatelessWidget {
                 Padding(
                     padding: const EdgeInsets.all(32.0),
                     child:
-                        Text("This is your diagnosis - $diagnosis",style: TextStyle(fontSize: 25, color: Colors.black))
+                        Text("This is your diagnosis: \n$diagnosis",style: TextStyle(fontSize: 25, color: Colors.black))
                 ),
                 Padding(
                   padding: const EdgeInsets.all(32.0),
@@ -1440,8 +1454,9 @@ class Result extends StatelessWidget {
 
 class Previous extends StatelessWidget {
   final String account;
-  const Previous({required this.account});
-
+  String diagnosis;
+  Previous({required this.account, required this.diagnosis});
+  final database = FirebaseDatabase.instance.ref('Account');
 
   @override
   Widget build(BuildContext context) {
@@ -1506,7 +1521,12 @@ class Previous extends StatelessWidget {
                                       title: const Text('Congratulations on being cured!'),
                                       actions: <Widget>[
                                         TextButton(
-                                          onPressed: () => Navigator.push(context,MaterialPageRoute(builder: (context) => MyHomePage(account: account))),
+                                          onPressed: () {
+                                            database.child(account).update({
+                                              'Disease' : diagnosis.toString(),
+                                            });
+                                            Navigator.push(context,MaterialPageRoute(builder: (context) => MyHomePage(account: account)));
+                                          },
                                           child: const Text('OK'),
                                         )
                                       ],
