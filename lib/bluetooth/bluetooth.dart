@@ -13,18 +13,14 @@ import 'package:flutter/widgets.dart';
 
 import '../heartBeat.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp();
-  runApp(FlutterBlueApp());
-}
-
 class FlutterBlueApp extends StatelessWidget {
+  final String account;
+  FlutterBlueApp({required this.account});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: {
-        '/destination' : (context) => ViewHeartBeat()
+        '/destination' : (context) => ViewHeartBeat(uid: account,)
       },
       color: Colors.lightBlue,
       home: StreamBuilder<BluetoothState>(
@@ -33,7 +29,7 @@ class FlutterBlueApp extends StatelessWidget {
           builder: (c, snapshot) {
             final state = snapshot.data;
             if (state == BluetoothState.on) {
-              return FindDevicesScreen();
+              return FindDevicesScreen(account: account);
             }
             return BluetoothOffScreen(state: state);
           }),
@@ -49,6 +45,9 @@ class BluetoothOffScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+      ),
       backgroundColor: Colors.lightBlue,
       body: Center(
         child: Column(
@@ -74,6 +73,8 @@ class BluetoothOffScreen extends StatelessWidget {
 }
 
 class FindDevicesScreen extends StatelessWidget {
+  final String account;
+  const FindDevicesScreen({required this.account});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,7 +107,7 @@ class FindDevicesScreen extends StatelessWidget {
                                     onPressed: () => Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                DeviceScreen(device: d))),
+                                                DeviceScreen(device: d, account: account,))),
                                   );
                                 }
                                 return Text(snapshot.data.toString());
@@ -127,7 +128,7 @@ class FindDevicesScreen extends StatelessWidget {
                       onTap: () => Navigator.of(context)
                           .push(MaterialPageRoute(builder: (context) {
                         r.device.connect();
-                        return DeviceScreen(device: r.device);
+                        return DeviceScreen(device: r.device, account: account,);
                       })),
                     ),
                   ).toList(),
@@ -160,9 +161,10 @@ class FindDevicesScreen extends StatelessWidget {
 }
 
 class DeviceScreen extends StatelessWidget {
-  const DeviceScreen({Key? key, required this.device}) : super(key: key);
+  const DeviceScreen({Key? key, required this.device, required this.account}) : super(key: key);
   
-  final BluetoothDevice device; //name of the device connected
+  final BluetoothDevice device;
+  final String account;//name of the device connected
 
   List<int> _getRandomBytes() {
     final math = Random();
@@ -180,6 +182,7 @@ class DeviceScreen extends StatelessWidget {
             service: s,
             characteristicTiles: s.characteristics.map((c) =>
                 CharacteristicTile(
+                  account: account,
                     characteristic: c,
                     onNotificationPressed: () async {
                       print(s);
@@ -293,7 +296,9 @@ class DeviceScreen extends StatelessWidget {
                 );
               },
             ),
-            ElevatedButton(onPressed:() {Navigator.push(context, MaterialPageRoute(builder: (context) => ViewHeartBeat()));}, child: Text('Heart'))
+            ElevatedButton(
+                onPressed:() {Navigator.push(context, MaterialPageRoute(builder: (context) => ViewHeartBeat(uid: account,)));},
+                child: Text('View Heart Rate'))
           ],
         ),
       ),

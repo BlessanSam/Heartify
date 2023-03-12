@@ -1,13 +1,16 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 class ViewHeartBeat extends StatefulWidget {
-  const ViewHeartBeat({Key? key}) : super(key: key);
+  final String uid;
+  const ViewHeartBeat({Key? key, required this.uid}) : super(key: key);
 
   @override
   State<ViewHeartBeat> createState() => _ViewHeartBeatState();
 }
 
 class _ViewHeartBeatState extends State<ViewHeartBeat> {
+  final database = FirebaseDatabase(databaseURL: "https://dbpde2100-default-rtdb.firebaseio.com").ref('Account');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,11 +29,24 @@ class _ViewHeartBeatState extends State<ViewHeartBeat> {
              children: [
                Text('Your heart rate',style: TextStyle(fontSize: 30,color: Colors.black45),),
                SizedBox(height: 10,),
-               Text('88',style: TextStyle(fontSize: 50),)
+               StreamBuilder(
+                 stream: database.child(widget.uid).child('HeartRate').onValue,
+                 builder: (context,AsyncSnapshot<DatabaseEvent> snapshot){
+                   print(snapshot.data?.snapshot.key.toString());
+                   Map<dynamic, dynamic> map = snapshot.data?.snapshot.value as dynamic;
+                   if(!snapshot.hasData){
+                     return const CircularProgressIndicator();
+                   } else {
+                     return ListTile(
+                       title: Center(child: Text(map['value'].toString(), style: TextStyle(fontSize: 50.0, color: Colors.black45),)),
+                     );
+                   }
+                 },
+               ),
              ],
            ),
          ),
-       ),
+      ),
     );
   }
 }

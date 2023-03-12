@@ -1,8 +1,15 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:healthmonitoring/heartBeat.dart';
-import 'package:healthmonitoring/pages/diagnosis.dart';
+import 'package:healthmonitoring/loginScreen.dart';
 
-void main() => runApp(const MyApp());
+import 'homePage.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp();
+  runApp(const MyApp());
+}
 
 
 class MyApp extends StatelessWidget {
@@ -16,86 +23,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.teal,
       ),
-      home: const MyHomePage(title: 'Health Monitor Home Page'),
+      home: const LoginScreen(),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key, required String title}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.tealAccent,
-      appBar: AppBar(
-        title: const Text('AI HEALTH',),
-        centerTitle: true,
-      ),
-      body: SafeArea(
-        child: Container(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(32.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            minimumSize: const Size(200,100),
-                          ),
-                          onPressed: (){
-                            Navigator.push(context,MaterialPageRoute(builder: (context) => const ViewHeartBeat()));
-                          },
-                          child: const Text('Heart Rate',style: TextStyle(
-                              fontFamily: 'Pacifico', fontSize:25, color: Colors.black,
-                          )),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(32.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            minimumSize: const Size(200,100),
-                          ),
-                          onPressed: (){
-                            if (diagnosis == "No previous diagnosis") {
-                              Navigator.push(context,MaterialPageRoute(builder: (context) => ChestPain()));
-                            } else {
-                              Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) => const Previous()));
-                            }
-                          },
-                          child: const Text(
-                              'Diagnose',
-                              style: TextStyle(
-                                fontFamily: 'Pacifico',
-                                fontSize:25,
-                                color: Colors.black,
-                              )
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          )
-        ),
-      ),
-    );
-  }
-}

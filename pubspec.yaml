@@ -39,6 +39,8 @@ dependencies:
   flutter_blue: ^0.8.0
   firebase_core: ^2.7.1
   firebase_database: ^10.0.15
+  firebase_auth: ^4.2.10
+  fluttertoast: ^8.2.1
 
 dev_dependencies:
   flutter_test:

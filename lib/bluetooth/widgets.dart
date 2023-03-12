@@ -151,38 +151,33 @@ class ServiceTile extends StatelessWidget {
 class CharacteristicTile extends StatelessWidget {
   final BluetoothCharacteristic characteristic;
   final VoidCallback? onNotificationPressed;
-
-  const CharacteristicTile({Key? key,required this.characteristic,this.onNotificationPressed}): super(key: key);
+  final String account;
+  const CharacteristicTile({Key? key,required this.characteristic,this.onNotificationPressed, required this.account}): super(key: key);
 
   @override
 
   Widget build(BuildContext context) {
-    final database = FirebaseDatabase.instance.ref('Heart');
+    final database = FirebaseDatabase.instance.ref('Account');
     Map<String, dynamic> map = {'value': 0};
     return StreamBuilder<List<int>>(
       stream: characteristic.value,
       initialData: characteristic.lastValue,
       builder: (c, snapshot) {
-        final value = snapshot.data?.length == 0 ? 0 : snapshot.data?.last;
+        final message = snapshot.data?.length == 0 ? 'Null' : 'Reading...';
         map.update('value', (value) => snapshot.data?.length == 0 ? 0 : snapshot.data?.last);
-        database.update(map);
+        database.child(account.toString()).child('HeartRate').update(map);
         return ExpansionTile(
           title: ListTile(
             title: null,
-            subtitle: Text(value.toString()),contentPadding: EdgeInsets.all(0.0),
+            subtitle: Text(message),contentPadding: EdgeInsets.all(0.0),
           ),
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               IconButton(
-                icon: Icon(Icons.bluetooth_connected, color: Theme.of(context).iconTheme.color?.withOpacity(0.5)),
+                icon: Icon(characteristic.isNotifying ? Icons.sync_disabled : Icons.sync, color: Theme.of(context).iconTheme.color?.withOpacity(0.5)),
                 onPressed: onNotificationPressed,
               ),
-              IconButton(
-                  onPressed:(){
-                    Navigator.pushNamed(context as BuildContext, '/destination', arguments: map);},
-                    icon: Icon(Icons.heart_broken)
-              )
             ],
           ),
         );
