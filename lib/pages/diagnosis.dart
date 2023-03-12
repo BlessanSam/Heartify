@@ -1440,8 +1440,9 @@ class Result extends StatelessWidget {
 
 class Previous extends StatelessWidget {
   final String account;
-  const Previous({required this.account});
-
+  String diagnosis;
+  Previous({required this.account, required this.diagnosis});
+  final database = FirebaseDatabase.instance.ref('Account');
 
   @override
   Widget build(BuildContext context) {
@@ -1499,14 +1500,19 @@ class Previous extends StatelessWidget {
                             actions: <Widget>[
                               TextButton(
                                 onPressed: () {
-                                  diagnosis = "No previous diagnosis";
+                                  diagnosis = "Null";
                                   showDialog<String>(
                                     context: context,
                                     builder: (BuildContext context) => AlertDialog(
                                       title: const Text('Congratulations on being cured!'),
                                       actions: <Widget>[
                                         TextButton(
-                                          onPressed: () => Navigator.push(context,MaterialPageRoute(builder: (context) => MyHomePage(account: account))),
+                                          onPressed: () {
+                                            database.child(account).update({
+                                              'Disease' : diagnosis.toString(),
+                                            });
+                                            Navigator.push(context,MaterialPageRoute(builder: (context) => MyHomePage(account: account)));
+                                          },
                                           child: const Text('OK'),
                                         )
                                       ],
