@@ -1464,6 +1464,15 @@ class Previous extends StatelessWidget {
       appBar: AppBar(
         title: Text("Previous Diagnosis"),
         backgroundColor: Colors.teal,
+        automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+              onPressed: (){
+                Navigator.push(context,MaterialPageRoute(builder: (context) => MyHomePage(account: account)));
+              },
+              icon: Icon(Icons.home)
+          )
+        ],
       ),
       body: Container(
         child: Center(
@@ -1514,7 +1523,7 @@ class Previous extends StatelessWidget {
                             actions: <Widget>[
                               TextButton(
                                 onPressed: () {
-                                  diagnosis = "No previous diagnosis";
+                                  diagnosis = "No Previous Diagnosis";
                                   showDialog<String>(
                                     context: context,
                                     builder: (BuildContext context) => AlertDialog(
@@ -1523,7 +1532,7 @@ class Previous extends StatelessWidget {
                                         TextButton(
                                           onPressed: () {
                                             database.child(account).update({
-                                              'Disease' : diagnosis.toString(),
+                                              'Disease' : "No Previous diagnosis"
                                             });
                                             Navigator.push(context,MaterialPageRoute(builder: (context) => MyHomePage(account: account)));
                                           },

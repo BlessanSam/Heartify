@@ -1,15 +1,9 @@
-// Copyright 2017, Paul DeMarco.
-// All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 class ScanResultTile extends StatelessWidget {
-  const ScanResultTile({Key? key, required this.result, this.onTap})
-      : super(key: key);
-
+  const ScanResultTile({Key? key, required this.result, this.onTap}): super(key: key);
   final ScanResult result;
   final VoidCallback? onTap;
 
@@ -119,9 +113,7 @@ class ScanResultTile extends StatelessWidget {
 class ServiceTile extends StatelessWidget {
   final BluetoothService service;
   final List<CharacteristicTile> characteristicTiles;
-
   const ServiceTile({Key? key, required this.service, required this.characteristicTiles}): super(key: key);
-
   @override
   Widget build(BuildContext context) {
     if (characteristicTiles.length > 0) {
@@ -153,9 +145,7 @@ class CharacteristicTile extends StatelessWidget {
   final VoidCallback? onNotificationPressed;
   final String account;
   const CharacteristicTile({Key? key,required this.characteristic,this.onNotificationPressed, required this.account}): super(key: key);
-
   @override
-
   Widget build(BuildContext context) {
     final database = FirebaseDatabase.instance.ref('Account');
     Map<String, dynamic> map = {'value': 0};

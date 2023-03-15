@@ -14,12 +14,12 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _formKey = GlobalKey<FormState>();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-
-  final _auth = FirebaseAuth.instance;
+  final _formKey = GlobalKey<FormState>(); // global identifier for Form()
+  final emailController = TextEditingController(); //controller for email's Text Field
+  final passwordController = TextEditingController();//controller for email's password Field
+  final _auth = FirebaseAuth.instance; //initializing Firebase Auth
   bool loading = false;
+
   @override
   void dispose() { // once logged in the email and password will be disposed
     // TODO: implement dispose
@@ -28,18 +28,18 @@ class _LoginScreenState extends State<LoginScreen> {
     passwordController.dispose();
   }
 
-  void login(){
+  void login(){ //Authentication of user to LogIn to account
     setState(() {
       loading = true;
     });
-    _auth.signInWithEmailAndPassword(email: emailController.text, password: passwordController.text.toString()).then((value){
+    _auth.signInWithEmailAndPassword(email: emailController.text, password: passwordController.text.toString()).then((value){ //check user authentication
       Utils().toastMessage(value.user!.email.toString());
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => MyHomePage(account : value.user!.uid.toString())));
       setState(() {
         loading = false;
       });
-    }).onError((error, stackTrace){
+    }).onError((error, stackTrace){ // user authentication failed
       debugPrint(error.toString());
       Utils().toastMessage(error.toString());
     });

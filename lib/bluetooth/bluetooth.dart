@@ -39,9 +39,7 @@ class FlutterBlueApp extends StatelessWidget {
 
 class BluetoothOffScreen extends StatelessWidget {
   const BluetoothOffScreen({Key? key, this.state}) : super(key: key);
-
   final BluetoothState? state;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,10 +58,7 @@ class BluetoothOffScreen extends StatelessWidget {
             ),
             Text(
               'Bluetooth Adapter is ${state != null ? state.toString().substring(15) : 'not available'}.',
-              style: Theme.of(context)
-                  .primaryTextTheme
-                  .subtitle1
-                  ?.copyWith(color: Colors.white),
+              style: Theme.of(context).primaryTextTheme.subtitle1?.copyWith(color: Colors.white),
             ),
           ],
         ),
@@ -162,10 +157,8 @@ class FindDevicesScreen extends StatelessWidget {
 
 class DeviceScreen extends StatelessWidget {
   const DeviceScreen({Key? key, required this.device, required this.account}) : super(key: key);
-  
   final BluetoothDevice device;
   final String account;//name of the device connected
-
   List<int> _getRandomBytes() {
     final math = Random();
     return [
@@ -175,7 +168,6 @@ class DeviceScreen extends StatelessWidget {
       math.nextInt(255)
     ];
   }
-
   List<Widget> _buildServiceTiles(List<BluetoothService> services) {
     return services.map(
           (s) => ServiceTile(
@@ -195,7 +187,6 @@ class DeviceScreen extends StatelessWidget {
           ),
         ).toList();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -224,12 +215,7 @@ class DeviceScreen extends StatelessWidget {
               }
               return ElevatedButton(
                   onPressed: onPressed,
-                  child: Text(
-                    text,
-                    style: Theme.of(context)
-                        .primaryTextTheme
-                        .button
-                        ?.copyWith(color: Colors.white),
+                  child: Text(text, style: Theme.of(context).primaryTextTheme.button?.copyWith(color: Colors.white),
                   ));
             },
           )

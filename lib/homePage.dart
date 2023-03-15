@@ -1,7 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:healthmonitoring/pages/diagnosis.dart';
-
 import 'bluetooth/bluetooth.dart';
 import 'heartBeat.dart';
 
@@ -9,6 +8,7 @@ class MyHomePage extends StatelessWidget {
   final String account;
   MyHomePage({required this.account});
   final database = FirebaseDatabase.instance.ref('Account');
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,14 +56,12 @@ class MyHomePage extends StatelessWidget {
                               minimumSize: const Size(200,100),
                             ),
                             onPressed: (){
+
                               database.child(account).child('Disease').onValue.listen((event) {
-                                Object? diagnosis = event.snapshot.value;
-                                if (diagnosis == "No previous diagnosis") {
-                                  Navigator.push(context,MaterialPageRoute(builder: (context) => ChestPain(account: account)));
-                                } else {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => Previous(account: account, diagnosis: diagnosis.toString(),)));
-                                }
+                                String diagnosis = event.snapshot.value.toString();Navigator.push(context, MaterialPageRoute(builder: (context) => Previous(account: account, diagnosis: diagnosis,)));
                               });
+                              print(diagnosis);
+
                             },
                             child: const Text(
                                 'Diagnose',

@@ -4,9 +4,9 @@ import 'package:healthmonitoring/loginScreen.dart';
 
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(MyApp());
+  WidgetsFlutterBinding.ensureInitialized(); //initialize core services required for application
+  await Firebase.initializeApp();//initialize firebase services in applicaation
+  runApp(MyApp()); //initialize application
 }
 
 class MyApp extends StatelessWidget {
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.teal,
       ),
-      home: const LoginScreen(),
+      home: const LoginScreen(), //
     );
   }
 }
