@@ -58,6 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
           appBar: AppBar(
             automaticallyImplyLeading: false,
             title: Center(child: Text('LOGIN')),
+            backgroundColor: Colors.teal,
           ),
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -69,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   key: _formKey,
                   child: Column(
                     children: [
-                      TextFormField(
+                      TextFormField( // Text Field for email address
                         keyboardType: TextInputType.emailAddress,
                         controller: emailController,
                         decoration: InputDecoration(
@@ -85,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                       ),
                       SizedBox(height:20),
-                      TextFormField(
+                      TextFormField(// Text Field for password
                         keyboardType: TextInputType.visiblePassword,
                         controller: passwordController,
                         obscureText: true,
@@ -101,7 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                       ),
                       SizedBox(height:45),
-                      RoundButton(
+                      RoundButton( //Button to Login
                         title: 'Login',
                         loading: loading,
                         onTap: (){
@@ -115,7 +116,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text("Dont have an account"),
-                          TextButton(
+                          TextButton( //Button to Sign Up
                             onPressed: (){
                               Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreen()));
                             },

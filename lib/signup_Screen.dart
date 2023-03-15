@@ -2,6 +2,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:healthmonitoring/form.dart';
 import 'package:healthmonitoring/homePage.dart';
 import 'package:healthmonitoring/widgets/round_button.dart';
 
@@ -21,7 +22,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  final database = FirebaseDatabase.instance.ref();
+
 
   FirebaseAuth _auth = FirebaseAuth.instance;
   @override
@@ -39,10 +40,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     _auth.createUserWithEmailAndPassword(
         email: emailController.text.toString(),
         password: passwordController.text.toString()).then((value){
-      database.update({
-        value.user!.uid.toString() : 'null'
-      });
-      Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage(account: value.user!.uid.toString())));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => MyForm(account: value.user!.uid.toString())));
       setState(() {
         loading = false;
       });
@@ -103,7 +101,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   SizedBox(height:50),
                   RoundButton(
-                    title: 'Sign up',
+                    title: 'Next',
                     loading: loading,
                     onTap: (){
                       if (_formKey.currentState!.validate()){

@@ -58,7 +58,7 @@ class MyHomePage extends StatelessWidget {
                             onPressed: (){
                               database.child(account).child('Disease').onValue.listen((event) {
                                 Object? diagnosis = event.snapshot.value;
-                                if (diagnosis == "No previous diagnosis") {
+                                if (diagnosis == "Null") {
                                   Navigator.push(context,MaterialPageRoute(builder: (context) => ChestPain(account: account)));
                                 } else {
                                   Navigator.push(context, MaterialPageRoute(builder: (context) => Previous(account: account, diagnosis: diagnosis.toString(),)));

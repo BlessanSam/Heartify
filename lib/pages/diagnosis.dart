@@ -1514,7 +1514,7 @@ class Previous extends StatelessWidget {
                             actions: <Widget>[
                               TextButton(
                                 onPressed: () {
-                                  diagnosis = "No previous diagnosis";
+                                  diagnosis = "Null";
                                   showDialog<String>(
                                     context: context,
                                     builder: (BuildContext context) => AlertDialog(
