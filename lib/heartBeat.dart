@@ -33,7 +33,6 @@ class _ViewHeartBeatState extends State<ViewHeartBeat> {
                    stream: database.child(widget.uid).child('HeartRate').onValue,
                    builder: (context,AsyncSnapshot<DatabaseEvent> snapshot){
                      print(snapshot.data?.snapshot.key.toString());
-                     // Map<dynamic, dynamic> map = snapshot.data?.snapshot.value as dynamic;
                      if(snapshot.hasData){
                        Map<dynamic, dynamic> map = snapshot.data?.snapshot.value as dynamic;
                        return ListTile(
