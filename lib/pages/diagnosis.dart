@@ -1,6 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import '../homePage.dart';
+import './moreInfo.dart';
 
 List<String> Symptoms = [];
 
@@ -1458,6 +1459,8 @@ class Previous extends StatelessWidget {
   Previous({required this.account, required this.diagnosis});
   final database = FirebaseDatabase.instance.ref('Account');
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -1498,7 +1501,11 @@ class Previous extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(5, 40, 0, 0),
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          if (diagnosis == "Angina") {
+                            Navigator.push(context,MaterialPageRoute(builder: (context) => AnginaInfo(account: account)));
+                          }
+                        },
                         child: Text("More info",style: TextStyle(fontSize: 15, color: Colors.white,)),
                       ),
                     ),
@@ -1523,7 +1530,7 @@ class Previous extends StatelessWidget {
                             actions: <Widget>[
                               TextButton(
                                 onPressed: () {
-                                  diagnosis = "No Previous Diagnosis";
+                                  diagnosis = "No previous diagnosis";
                                   showDialog<String>(
                                     context: context,
                                     builder: (BuildContext context) => AlertDialog(
@@ -1532,7 +1539,7 @@ class Previous extends StatelessWidget {
                                         TextButton(
                                           onPressed: () {
                                             database.child(account).update({
-                                              'Disease' : "No Previous diagnosis"
+                                              'Disease' : "No previous diagnosis"
                                             });
                                             Navigator.push(context,MaterialPageRoute(builder: (context) => MyHomePage(account: account)));
                                           },
@@ -1566,7 +1573,7 @@ class Previous extends StatelessWidget {
                         onPressed: (){
                           Navigator.push(context,MaterialPageRoute(builder: (context) => ChestPain(account: account)));
                         },
-                        child: const Text('Rediagnose',style: TextStyle(
+                        child: Text('Rediagnose',style: TextStyle(
                           fontSize:25, color: Colors.black,
                         )),
                       ),
